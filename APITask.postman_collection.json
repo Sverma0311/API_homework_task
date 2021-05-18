@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "4778498f-0d90-4ae3-9891-ce1fdb9f2dea",
+		"name": "Get",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getRequest",
+			"item": [
+				{
+					"name": "userAgeValidation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    if(pm.response.code==200){",
+									"     var jsonData = pm.response.json();",
+									"     pm.expect(jsonData.name, \"Name is not contains value\").not.equal(null); ",
+									"    }",
+									"});",
+									"pm.test(\"check age of \"+pm.iterationData.get(\"name\"), function () {",
+									"    var jsonData = pm.response.json();",
+									"   if(jsonData.age<40){",
+									"        console.error(pm.iterationData.get(\"name\")+\" is younger then 40\");",
+									"    }",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURLAge}}?name={{name}}",
+							"host": [
+								"{{baseURLAge}}"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userGenderValidation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200 ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"});",
+									"pm.test(\"check the gender\", function () {",
+									"    var jsonData = pm.response.json();",
+									"   if(jsonData.gender==\"male\"&& jsonData.probability>0.90){",
+									"       console.log(\"current timestamp :\"+new Date().getTime());",
+									"       console.log(\"person name:\"+jsonData.name); ",
+									"       console.log(\"count : \"+jsonData.count);",
+									"   }",
+									"   if(jsonData.gender==\"female\"){",
+									"       console.log(\"person name : \"+jsonData.name);",
+									"       console.log(\"probability : \"+jsonData.probability);",
+									"   }",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLGender}}?name={{name}}",
+							"host": [
+								"{{baseURLGender}}"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
